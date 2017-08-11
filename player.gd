@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var sprite_node
+
 # -1 for going left, 1 for going right
 var input_direction = 0
 var direction = 1
@@ -20,6 +22,7 @@ const MAX_FALL_SPEED = 1400
 func _ready():
 	set_process(true)
 	set_process_input(true)
+	sprite_node = get_node("Sprite")
 
 func _input(event):
 	if event.is_action_pressed("jump"):
@@ -39,11 +42,12 @@ func _process(delta):
 		input_direction = 1
 	elif not Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 		input_direction = 0
-	# Speed_x reducing when changing direction
+	# Changing direction
 	if is_moving_left or is_moving_right and input_direction:
 		if direction == -input_direction:
 			speed_x /= 8
 			direction = input_direction
+			sprite_node.set_flip_h(!sprite_node.is_flipped_h())
 	
 	# Motion
 	if input_direction:

@@ -26,7 +26,6 @@ extents = Vector2( 19.0943, 414.906 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 622.52, 325.068 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
