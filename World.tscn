@@ -1,26 +1,36 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://player.png" type="Texture" id=2]
+[ext_resource path="res://floor.png" type="Texture" id=3]
+[ext_resource path="res://curtains.png" type="Texture" id=4]
+[ext_resource path="res://hills.png" type="Texture" id=5]
+[ext_resource path="res://sky.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 15.1946, 14.3692 )
+extents = Vector2( 28.0269, 32.8845 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 398.745, 10 )
+extents = Vector2( 641.567, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 19.0943, 414.906 )
 
 [node name="World" type="Node2D"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
 
-transform/pos = Vector2( 416.488, 119.036 )
+editor/display_folded = true
+transform/pos = Vector2( 622.52, 325.068 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1.79565, 0, 0, 1.77115, 0.469025, 0.348526 )
+shapes/0/transform = Matrix32( 1.79565, 0, 0, 1.77115, 4.87958, 34.1628 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -29,11 +39,12 @@ script/script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 
+z/z = 1
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 
-transform/pos = Vector2( 0.469025, 0.348526 )
+transform/pos = Vector2( 4.87958, 34.1628 )
 transform/scale = Vector2( 1.79565, 1.77115 )
 shape = SubResource( 1 )
 trigger = false
@@ -41,13 +52,14 @@ _update_shape_index = 0
 
 [node name="Ground" type="Node2D" parent="."]
 
-transform/pos = Vector2( 417.376, 512.715 )
+editor/display_folded = true
+transform/pos = Vector2( 636.023, 668.291 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Ground"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 9.08826, -10.0312 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -58,8 +70,69 @@ bounce = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground/StaticBody2D"]
 
+transform/pos = Vector2( 9.08826, -10.0312 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
+
+[node name="Sprite" type="Sprite" parent="Ground/StaticBody2D"]
+
+transform/pos = Vector2( 4.54419, -310.561 )
+texture = ExtResource( 3 )
+
+[node name="Walls" type="Node2D" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( 638.441, 360.504 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -614.468, 39.5945 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 3 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 626.138, 45.5374 )
+shapes/1/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="LeftCollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+
+transform/pos = Vector2( -614.468, 39.5945 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+[node name="RightCollisionShape2D1" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+
+transform/pos = Vector2( 626.138, 45.5374 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 1
+
+[node name="Sprite" type="Sprite" parent="Walls"]
+
+transform/pos = Vector2( 1.10803, -5.54019 )
+z/z = 2
+texture = ExtResource( 4 )
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Hills" type="Sprite" parent="Background"]
+
+transform/pos = Vector2( 637.01, 482.895 )
+z/z = -1
+texture = ExtResource( 5 )
+
+[node name="Sky" type="Sprite" parent="Background"]
+
+transform/pos = Vector2( 637.01, 359.603 )
+z/z = -2
+texture = ExtResource( 6 )
 
 

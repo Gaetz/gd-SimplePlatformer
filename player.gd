@@ -46,9 +46,19 @@ func _process(delta):
 	else:
 		speed_x -= DECELERATION * delta
 	speed_x = clamp(speed_x, 0, MAX_SPEED_X)
-
+	# Gravity
 	speed_y += GRAVITY * delta
-
+	# Move
 	velocity.x = speed_x * delta * direction
 	velocity.y = speed_y * delta
-	move(velocity)
+	var movement_remainder = move(velocity)
+	
+	# Manage ground collision
+	if is_colliding():
+		# Manage horizontal movement
+		var normal = get_collision_normal()
+		var final_movement = normal.slide(movement_remainder)
+		# Manage vertical movement
+		speed_y = normal.slide(Vector2(0, speed_y)).y
+		# Execute movement
+		move(final_movement)
